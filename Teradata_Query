@@ -1,0 +1,55 @@
+create table rec
+(
+str varchar(20)
+);
+
+insert into rec values('s12r3.@4');
+
+
+--Recursive query is set of 3 sub queries 
+with recursive temp
+(iteration,path,rem)as
+(
+--First Query
+--Initializing the variables
+--iteration is to calculate the number of iterations taken to process
+--"temp" is a volatile table to put the generated rows in each step
+select 0 as iteration, 
+cast ('' as varchar(20)) as path,
+str as rem
+from rec
+union all
+--second query
+--this is recursive query which executes until the condition fails in WHERE clause
+select iteration+1,
+path||case when substr(rem,1,1) in ('0','1','2','3','4','5','6','7','8','9') then substr(rem,1,1) else '' end ,
+substr(rem,2) as rem
+from temp
+where characters(rem)>0
+)
+--Third Query
+--This query gives the final desired output from the set of rows present in the "temp" table
+select 
+* from temp
+where iteration>0
+and rem='';
+
+OUTPUT:
+-------
+
+Rows present the temp table
+
+Iteration   Path    rem
+------------------------
+0          <blank>   s12r3.@4
+1          <blank>   12r3.@4       --Path value is blank since 's' is not present in 0-9
+2            1       2r3.@4
+3            12      r3.@4
+4            12      3.@4
+5            123     .@4
+6            123     @4
+7            123     4
+8            1234    <blank>
+
+The above 9 rows will be present in "temp" table.
+The desired output will be selected using the third query (WHERE rem=<blank>).The last row will be displayed
