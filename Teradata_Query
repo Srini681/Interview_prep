@@ -1,9 +1,21 @@
+Creating a table:
+-----------------
 create table rec
 (
 str varchar(20)
 );
 
+Insertig Data Value:
+--------------------
+
 insert into rec values('s12r3.@4');
+
+Recursive Query to remove extra characters in data value.
+
+Desired Output:
+--------------
+1234
+
 
 
 --Recursive query is set of 3 sub queries 
