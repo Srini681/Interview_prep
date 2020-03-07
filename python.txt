@@ -1,0 +1,222 @@
+https://www.careercup.com/page?pid=string-manipulation-interview-questions
+http://javarevisited.blogspot.com/2015/01/top-20-string-coding-interview-question-programming-interview.html
+
+You are given two string (like two statements). You have to remove all the words of second string from first string and print the remaining first string. Please maintain the order of the remaining words from the first string. You will be only removing the first word, not all occurrence of a word. 
+Example: Str1 = "A Statement is a Statement", Str2 = "Statement a" 
+Output: "A is Statement"
+
+def str_compare():
+	str1 = "A Statement is a Statement"
+	str2 = "Statement a"
+	i = 0
+	str_list1 = str1.split(" ")
+	str_list2 =str2.split(" ")
+	for word in str_list2:
+		if (word in str_list1):
+			i = str_list1.index(word)
+			del str_list1[i]
+	print(str_list1)
+	
+-------------------------------------
+To start with, we have a simple String related coding question frequently asked in programming interviews. You need to write a program in C, C++, Java or Python to print duplicate characters from a given String, for example if String is "Java" then program should print "a". Bonus points if your program is robust and handle different kinds of input e.g. String without duplicate, null or empty String etc. Bonus points if you also write unit tests for normal and edge cases.
+
+def dup():
+	str = 'Java'
+	map = {}
+	for chr in str:
+		if (chr in map):
+			map[chr] = map[chr]+1
+		else:
+			map[chr]=1
+	return map
+	
+--------------------------------------
+A simple coding problem based upon String, but could also be asked with numbers. You need to write a Java program to check if two given strings are anagrams of Each other. Two strings are anagrams if they are written using the same exact letters, ignoring space, punctuation and capitalization. Each letter should have the same count in both strings. For example, Army and Mary are anagram of each other.
+
+
+Anagrams
+
+ def ana():
+	str1 = 'Army'
+	str2='Mary'
+	str_list1 = set(str1.lower())
+	str_list2 = set(str2.lower())
+	if ( not str_list1 - str_list1.intersection(str_list2) ):
+		print ("Strings are same")
+		
+----------------------------------------
+
+One of the most common string interview questions: Find the first non-repeated (unique) character in a given string. for Example if given String is "Morning" then it should print "M". This question demonstrates efficient use of Hashtable. We scan the string from left to right counting the number occurrences of each character in a Hashtable. Then we perform a second pass and check the counts of every character. Whenever we hit a count of 1 we return that character, that’s the first unique letter. Be prepared for follow-up question for improving memory efficiency, solving it without hash table as well.
+
+
+
+def non_repeat():
+	str = 'Morning'
+	order = []
+	map = {}
+	for chr in str:
+		order.append(chr)
+		if (chr in map):
+			map[chr] = map[chr]+1
+		else:
+			map[chr]=1
+	print(order)
+	for val in order:
+		if(map[val] == 1):
+			print("First non-repeated Character: " + val)
+			break;
+			
+---optimized			
+ def non_repeat():
+	str = 'Morning'
+	order = []
+	char_map = {}
+	order = list(str)
+	for i in range(0,len(order)-2):
+		new_list = order[i+1 :]
+		if ( order[i] in new_list):
+			continue
+		else:
+			print("First Non-repeated Character: " + order[i])
+			break;
+-----------------------------------------------------------------------------
+
+reverse a string
+
+def reverse():
+	str = 'hello world'
+	rev = ''
+	i,j=len(str)-1,0
+	while(j != len(str)):
+		rev = rev + str[i]
+		i= i-1 ; j = j +1
+	print(str,rev)
+	
+--------------------------------------------------------------------------
+def numcheck(str):
+	try:
+		int(str)
+		return True
+	except ValueError:
+		return False
+---------------------------------------------------------------------------
+palindrome 
+
+def palin(s1):
+	s2 = s1[::-1]
+	if (s1 == s2):
+		return True
+	else:
+		return False
+---------------------------------------------------------------------------
+This is one of the interesting String question, which also has lots of variants. You need to remove duplicate characters from a given string keeping only the first occurrences. For example, if the input is ‘bananas’ the output will be ‘bans’. Pay attention to what output could be, because if you look closely original order of characters are retained the in output. This is where many developer make the a mistake of shorting character array of String and removing duplicates, similar to how you remove duplicates from array. That destroys original order of characters and will not be correct solution in this case.
+
+
+ def dup_remove(str):
+	order = list(str)
+	unique = {}
+	out =''
+	for chr in order:
+		unique[chr]=1
+	for chr in order:
+		if(chr in unique):
+			out = out + chr
+			del unique[chr]
+		else:
+			continue
+	print(out)
+--------------------------------------------------------------------------------------
+
+You need to write a function to search for the existence of a string (target) in another string (source). The function takes two strings as the input and returns the index where the second string is found. If the target string cannot be found, then return -1. If you are a Java developer, then you can related its behavior to indexOf() method from java.lang.String class. This question is also asked as Code and algorithm to check if a given short string is a substring of a main string. Can you get a linear solution (O(n)) if possible?
+
+
+def sub_str(s1,s2):
+	i=0
+	ch = s2[0]
+	for char in list(s1):
+		if char is ch:
+			print(s1[i:i+len(s2)],s2)
+			i = s1.index(char)
+			if s1[i:i+len(s2)] is s2:
+				return 'sub'
+	return 'nothing'
+---------------------------------------------------------------------------------
+most repeated characetrs in a string
+def max_char():
+	str = 'aaaaaaaaaaaaaaaaabbbbcddddeeeeee'
+	cnt = {}
+	i = 0
+	x=''
+	for chr in str:
+		if chr in cnt:
+			cnt[chr] = cnt[chr]+1
+		else:
+			cnt[chr]=1
+	for out in cnt:
+		if(i < cnt[out]):
+			i = cnt[out]
+			x = out
+	print('Most repeated character: ' + x + ' times' )
+	print(i)
+--------------------------------------------------------------------------------
+
+One of my favorite coding question, when I interview Java developers. You need to write a Java method which will accept a String and a character to be removed and return a String, which doesn't has that character e.g remove(String word, char ch).  You need to provide both iterative and recursive solution of this method and also has to write JUnit tests to cover cases like null and empty String, input which only contains letter to be removed, String which doesn't contain given character etc.
+
+
+def remove(s1,ch):
+	order = list(s1)
+	dup = {}
+	out = ''
+	for chr in s1:
+		dup[chr]=1
+	del dup[ch]
+	for chr in order:
+		if chr in dup:
+			out = out + chr
+
+	print(out)
+	
+-------------------------------------------------------------------------------------
+
+Write a Program to sort String on their length in Java? Your method should accept  an array of String and return a sorted array based upon the length of String. Don't forget to write unit tests for your solution.
+
+
+def sort_strings():
+	str = ['hello','hi','myname','a','ab']
+	sort_map = {}
+	order = []
+	out = []
+	i = 0
+	new_list = []
+	for word in str:
+		sort_map[word] = len(word)
+		order.append(len(word))
+	new_list = sorted(order)
+	for i in range(0,len(order)-1):
+		for word in str:
+			if (sort_map[word] == new_list[i]):
+				out.append(word)
+				break
+	print(out)
+	
+-----------------------------------------------------------------------------------------
+parse a string of strings and pick up integers in each string and display as output. continuous numbers in a string should be displayed a single number. 
+Eg.3rfg5 output should be 3,5
+34rf8tv output should be 34,8
+
+
+def num(str):
+	out =''
+	def check_int(x):
+		try:
+			int(x)
+			return True
+		except ValueError:
+			return False
+	for chr in str:
+		if(check_int(chr)==True):
+			out = out + chr
+		else:
+			print(out)
+			out = ''
+	print(out)

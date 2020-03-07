@@ -1,0 +1,21 @@
+IN vs EXISTS:
+------------
+Performance : IN suitable for smaller sets in INNER QUERY, EXISTS for larger sets\
+IN scans the entire result, EXISTS stops the scanning once match is found
+
+select * from a where col1 in (select null);
+
+select * from a where exists (select null);
+
+---------------------------------
+
+1) COLLECT STATS
+2) Using proper PI and PPI(should be be in condition)
+3) No FUNCTIONS in WHERE condition
+4) Joining columns should be of same datatype
+5) VOLATILE TABLE and STATS on them, DROP explicitly
+6) Should use proper ALIASES
+7) Avoid FTS use SI
+8) if more values present in IN clause , insert those values in volatile table and inner join
+
+
